@@ -20,13 +20,14 @@ public class OnlineServer implements Runnable {
 
 	@Override
 	public void run() {
+		String nick = null;
 		try(InputStream in = socket.getInputStream();
 				OutputStream out = socket.getOutputStream()) {
 			
 			//读取昵称
 			byte[] buf = new byte[64];
 			int size = in.read(buf);
-			String nick = new String(buf, 0, size);
+			nick = new String(buf, 0, size);
 			int userSize = users.size();
 			
 			//读取udpPort
@@ -54,7 +55,12 @@ public class OnlineServer implements Runnable {
 //					//下线，移除
 //					users.remove(nick);
 //				}
+				//System.out.println("sock:"+socket.isConnected());
+				
 				int newSize = users.size();
+				
+				//System.out.println(socket.getPort());
+				
 				if(newSize != userSize) {
 					json =new Gson().toJson(users);
 					System.out.println("发送： " + json);
@@ -63,12 +69,21 @@ public class OnlineServer implements Runnable {
 					out.flush();
 					userSize = newSize;
 				}
+
+				
 				Thread.sleep(3000);
+				socket.setSoTimeout(10);
+				
+				socket.getInputStream().read();
+				//System.out.println(tmp);
 			}
 		
 			
 		} catch (Exception e) {
-			// TODO: handle exception
+			System.out.println(nick+"已下线");
+			users.remove(nick);
+			System.out.println(users.toString());
+			Thread.currentThread().stop();
 		}
 		
 	}

@@ -25,6 +25,9 @@ public class Chat {
 	public Chat() {
 		try {
 			
+			if(Thread.currentThread().isInterrupted()) {
+				System.out.println("abc");
+			}
 			//TODO C/S 客户端和服务端连接
 			tcpSocket = new Socket("127.0.0.1", 9000);
 			InputStream in = tcpSocket.getInputStream();
@@ -69,6 +72,7 @@ public class Chat {
 				
 			}
 			udpSocket.close();
+			
 		} catch (SocketException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

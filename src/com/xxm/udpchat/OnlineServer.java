@@ -38,6 +38,7 @@ public class OnlineServer implements Runnable {
 			int udpPort = Integer.parseInt(uString);
 //			System.out.println("udp=" + udpPort);
 
+			
 			//存储
 			users.put(nick, udpPort);
 //			System.out.println(users.size());
@@ -51,16 +52,9 @@ public class OnlineServer implements Runnable {
 			//更新在线用户列表
 			while(true) {
 				
-//				if(socket.isClosed()) {
-//					//下线，移除
-//					users.remove(nick);
-//				}
-				//System.out.println("sock:"+socket.isConnected());
-				
 				int newSize = users.size();
-				
+				InputStream inputStream =socket.getInputStream();
 				//System.out.println(socket.getPort());
-				
 				if(newSize != userSize) {
 					json =new Gson().toJson(users);
 					System.out.println("发送： " + json);
@@ -70,20 +64,15 @@ public class OnlineServer implements Runnable {
 					userSize = newSize;
 				}
 
-				
-				Thread.sleep(3000);
-				socket.setSoTimeout(10);
-				
-				socket.getInputStream().read();
-				//System.out.println(tmp);
-			}
-		
+				Thread.sleep(5000);				
+//				socket.getInputStream().read();		
+			}		
 			
 		} catch (Exception e) {
 			System.out.println(nick+"已下线");
 			users.remove(nick);
 			System.out.println(users.toString());
-			Thread.currentThread().stop();
+//			Thread.currentThread().stop();
 		}
 		
 	}

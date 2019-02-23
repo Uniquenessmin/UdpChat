@@ -55,14 +55,14 @@ public class OnlineServer implements Runnable {
 				int newSize = users.size();
 				InputStream inputStream =socket.getInputStream();
 				//System.out.println(socket.getPort());
-				if(newSize != userSize) {
+//				if(newSize != userSize) {
 					json =new Gson().toJson(users);
 					System.out.println("·¢ËÍ£º " + json);
 					byte[] data = json.getBytes();
 					out.write(data, 0, json.length());
 					out.flush();
 					userSize = newSize;
-				}
+//				}
 
 				Thread.sleep(5000);				
 //				socket.getInputStream().read();		

@@ -28,34 +28,33 @@ public class Chat {
 			if(Thread.currentThread().isInterrupted()) {
 				System.out.println("abc");
 			}
-			//TODO C/S ¿Í»§¶ËºÍ·şÎñ¶ËÁ¬½Ó
+			//TODO C/S å®¢æˆ·ç«¯ä¸æœåŠ¡å™¨å»ºç«‹é“¾æ¥
 			tcpSocket = new Socket("127.0.0.1", 9000);
 			InputStream in = tcpSocket.getInputStream();
 			OutputStream out = tcpSocket.getOutputStream();
-			
-			System.out.println("êÇ³Æ: ");
+			//å‘é€æ˜µç§°
+			System.out.println("æ˜µç§°: ");
 			Scanner sc = new Scanner(System.in);
 			String nick = sc.nextLine();			
-			//·¢ËÍêÇ³Æ
 			out.write(nick.getBytes());
 			out.flush();
 			
-			//udp¶Ëµ½¶Ë p2p
+			//udp å®¢æˆ·ç«¯ä¹‹é—´é€šä¿¡ ç«¯åˆ°ç«¯ p2p
 			udpSocket = new DatagramSocket();
 			int udpPort = udpSocket.getLocalPort();			
 			
-			//TODO °ÑudpµÄ¶Ë¿ÚºÅ·¢¹ıÈ¥
+			//TODO ï¿½ï¿½udpï¿½Ä¶Ë¿ÚºÅ·ï¿½ï¿½ï¿½È¥
 			out.write(String.valueOf(udpPort).getBytes());
 			out.flush();
 			System.out.println(String.valueOf(udpPort));
 																																																																	
-			//´«ËÍÓÃ»§deÁĞ±í¸øSendTask
+			//ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½deï¿½Ğ±ï¿½ï¿½SendTask
 			sender = new Thread(new SendTask(udpSocket));
 			receiver = new Thread(new ReceiveTask(udpSocket));			
 			sender.start();
 			receiver.start();
 			
-			//½ÓÊÕÔÚÏßÓÃ»§ÁĞ±í
+			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½Ğ±ï¿½
 			byte[] buf = new byte[1024];
 			int size;
 			String json;
@@ -64,7 +63,7 @@ public class Chat {
 				json = new String(buf, 0, size);
 				
 				HashMap<String, Integer> users = new Gson().fromJson(json, HashMap.class);
-				System.out.println("ÔÚÏßÓÃ»§£º" + users);
+				System.out.println("åœ¨çº¿ç”¨æˆ·" + users);
 			}
 			
 			while(sender.isAlive()||receiver.isAlive()) {
@@ -91,16 +90,16 @@ public class Chat {
 	}
 	
 }
-//¿Í»§¶Ë·¢ĞÅÏ¢¸ø·şÎñ¶Ë
-//·şÎñ¶Ë¸ø¿Í»§¶Ë·¢ÁĞ±íĞÅÏ¢
-//ÔÚÏßÓÃ»§¸üĞÂ£¬¿Í»§¶Ë¿ÉÒÔµÃµ½¸üĞÂĞÅÏ¢
-//·¢ËÍ²»Í¬ÀàĞÍµÄÏûÏ¢£¬×Ö·û´®¡¢Í¼Æ¬¡¢ÎÄ¼ş
+//ï¿½Í»ï¿½ï¿½Ë·ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+//ï¿½ï¿½ï¿½ï¿½Ë¸ï¿½ï¿½Í»ï¿½ï¿½Ë·ï¿½ï¿½Ğ±ï¿½ï¿½ï¿½Ï¢
+//ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½Â£ï¿½ï¿½Í»ï¿½ï¿½Ë¿ï¿½ï¿½ÔµÃµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
+//ï¿½ï¿½ï¿½Í²ï¿½Í¬ï¿½ï¿½ï¿½Íµï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½Í¼Æ¬ï¿½ï¿½ï¿½Ä¼ï¿½
 
 
-//Êı¾İ½âÎö ÎÄ¼ş ÍøÂç±à³Ì
+//ï¿½ï¿½ï¿½İ½ï¿½ï¿½ï¿½ ï¿½Ä¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-//Í¨Ñ¶Ë«·½ÊÇË­£¿
-//Ôö¼Ó ×¢²á
-//·¢ËÍµÄĞÅÏ¢ÓÃjson°ü×°
-//Á½Ì¨»úÆ÷ÓÃÍâÍø
+//Í¨Ñ¶Ë«ï¿½ï¿½ï¿½ï¿½Ë­ï¿½ï¿½
+//ï¿½ï¿½ï¿½ï¿½ ×¢ï¿½ï¿½
+//ï¿½ï¿½ï¿½Íµï¿½ï¿½ï¿½Ï¢ï¿½ï¿½jsonï¿½ï¿½×°
+//ï¿½ï¿½Ì¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 //ui

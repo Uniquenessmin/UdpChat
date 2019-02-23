@@ -24,13 +24,13 @@ public class OnlineServer implements Runnable {
 		try(InputStream in = socket.getInputStream();
 				OutputStream out = socket.getOutputStream()) {
 			
-			//¶ÁÈ¡êÇ³Æ
+			//ï¿½ï¿½È¡ï¿½Ç³ï¿½
 			byte[] buf = new byte[64];
 			int size = in.read(buf);
 			nick = new String(buf, 0, size);
 			int userSize = users.size();
 			
-			//¶ÁÈ¡udpPort
+			//ï¿½ï¿½È¡udpPort
 			byte[] udp = new byte[64];
 			size = in.read(udp);
 			String uString = new String(udp, 0, size);
@@ -39,40 +39,49 @@ public class OnlineServer implements Runnable {
 //			System.out.println("udp=" + udpPort);
 
 			
-			//´æ´¢
+			//ï¿½æ´¢
 			users.put(nick, udpPort);
 //			System.out.println(users.size());
 			
 			
-			//·¢ËÍÆäËûÓÃ»§ĞÅÏ¢
-			//¶ÔÏóµÄÊä³öÁ÷£¿
+			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½Ï¢
+			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			//users---> XML/JSON
-			String json;
+			String json = new Gson().toJson(users);
+			String newJson = null;
+			System.out.println("å‘é€ï¼š" + json);
+			byte[] data = json.getBytes();
+			out.write(data, 0, json.length());
+			out.flush();
 			
-			//¸üĞÂÔÚÏßÓÃ»§ÁĞ±í
+			/**
+			 * ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½Ğ±ï¿½
+			 * 
+			 */
 			while(true) {
 				
-				int newSize = users.size();
-				InputStream inputStream =socket.getInputStream();
-				//System.out.println(socket.getPort());
-//				if(newSize != userSize) {
-					json =new Gson().toJson(users);
-					System.out.println("·¢ËÍ£º " + json);
-					byte[] data = json.getBytes();
-					out.write(data, 0, json.length());
+//				int newSize = users.size();
+				newJson =new Gson().toJson(users);
+				System.out.println(socket.getPort());
+				if(!json.equals(newJson)) {
+	
+					System.out.println("å‘é€ï¼š " + newJson);
+					byte[] datas = newJson.getBytes();
+					out.write(datas, 0, newJson.length());
 					out.flush();
-					userSize = newSize;
-//				}
+//					userSize = newSize;
+					json = newJson;
+					
+				}
 
 				Thread.sleep(5000);				
-//				socket.getInputStream().read();		
+//				socket.getInputStream().read();	//**è¿™å¥ä¼šå¯¼è‡´å¥—æ¥å­—å µå¡**	
 			}		
 			
 		} catch (Exception e) {
-			System.out.println(nick+"ÒÑÏÂÏß");
+			System.out.println(nick+"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 			users.remove(nick);
 			System.out.println(users.toString());
-//			Thread.currentThread().stop();
 		}
 		
 	}

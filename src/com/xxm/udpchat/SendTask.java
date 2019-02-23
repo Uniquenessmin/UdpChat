@@ -17,27 +17,27 @@ public class SendTask implements Runnable {
 		Data data;
 		String msg = "no";
 		do {
-			System.out.println("Ä¿±ê¶Ë¿Ú£º ");
+			System.out.println("ç›®æ ‡ç«¯å£ï¼š ");
 			Scanner scanner = new Scanner(System.in);
 			int port = Integer.parseInt(scanner.nextLine());
 			
-			//·¢ËÍÄÚÈİµÄ2ÖÖÀàĞÍ
-			System.out.println("·¢ËÍÎÄ×ÖÊäÈë1£¬ÎÄ¼şÊäÈë2£º");
+			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½İµï¿½2ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			System.out.println("å‘é€å­—ç¬¦ä¸²è¾“å…¥1ï¼Œæ–‡ä»¶è¾“å…¥2ï¼š");
 			msgDecide = scanner.nextInt();
 			data = new Data(socket,port);
-			System.out.print("·¢ËÍ£º");
-			//·¢ÎÄ×Ö
+			System.out.print("");
+			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			if (msgDecide == 1) {
 				msg = data.sendMsg();
 			}
-			//·¢ÎÄ¼ş
+			//ï¿½ï¿½ï¿½Ä¼ï¿½
 			if(msgDecide == 2) {
 				data.sendFile();
 			}
 				
 			
 		} while (!msg.toUpperCase().equals("BYE"));
-		System.out.println("·¢ËÍ½áÊø");
+		System.out.println("å‘é€ç»“æŸ");
 		
 	}
 

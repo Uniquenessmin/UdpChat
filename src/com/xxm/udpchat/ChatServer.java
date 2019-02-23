@@ -10,13 +10,13 @@ import java.util.concurrent.Executors;
 
 public class ChatServer{
 	
-	//tcpÌ×½Ó×Ö
+	//tcpå¥—æ¥å­—
 	ServerSocket serverSocket;
 	
-	//´´½¨Ïß³Ì³Ø
+	//åˆ›å»ºçº¿ç¨‹æ± 
 	ExecutorService pool;
 	
-	//¼ÇÂ¼¿Í»§ĞÅÏ¢
+	//ï¿½ï¿½Â¼ï¿½Í»ï¿½ï¿½ï¿½Ï¢
 	Map<String, Integer> users = new HashMap<>();
 	
 	public ChatServer() {
@@ -25,12 +25,12 @@ public class ChatServer{
 	
 	public void start() {
 		try {
-			//´´½¨Á¬½Ó
+			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			serverSocket = new ServerSocket(9000);
-			System.out.println("·şÎñÆ÷Æô¶¯...");
+			System.out.println("æœåŠ¡å™¨å¯åŠ¨...");
 			
 			while(true) {
-				//ÈÃÏß³Ì³ØÖĞµÄÒ»¸öÏß³ÌÈ¥´¦ÀíÓÃ»§ÉÏÏßĞÅÏ¢
+				//ï¿½ï¿½ï¿½ß³Ì³ï¿½ï¿½Ğµï¿½Ò»ï¿½ï¿½ï¿½ß³ï¿½È¥ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
 				Socket socket = serverSocket.accept();
 				
 				pool.execute(new OnlineServer(socket,users));
@@ -52,6 +52,6 @@ public class ChatServer{
 //
 //	static public void add(Chat chat) {
 ////		onlineServer.addObserver(chat);
-//		System.out.println("Ôö¼ÓÁË");
+//		System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 //	}
 }

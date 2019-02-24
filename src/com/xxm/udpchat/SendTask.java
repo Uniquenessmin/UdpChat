@@ -21,16 +21,16 @@ public class SendTask implements Runnable {
 			Scanner scanner = new Scanner(System.in);
 			int port = Integer.parseInt(scanner.nextLine());
 			
-			//�������ݵ�2������
+			//两种信息类型
 			System.out.println("发送字符串输入1，文件输入2：");
 			msgDecide = scanner.nextInt();
 			data = new Data(socket,port);
-			System.out.print("");
-			//������
+			System.out.print("send：");
+			//发字符串
 			if (msgDecide == 1) {
 				msg = data.sendMsg();
 			}
-			//���ļ�
+			//发文件
 			if(msgDecide == 2) {
 				data.sendFile();
 			}

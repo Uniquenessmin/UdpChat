@@ -16,7 +16,7 @@ public class ChatServer{
 	//创建线程池
 	ExecutorService pool;
 	
-	//��¼�ͻ���Ϣ
+	//存储用户列表
 	Map<String, Integer> users = new HashMap<>();
 	
 	public ChatServer() {
@@ -25,14 +25,14 @@ public class ChatServer{
 	
 	public void start() {
 		try {
-			//��������
+			//服务套接字
 			serverSocket = new ServerSocket(9000);
 			System.out.println("服务器启动...");
 			
 			while(true) {
-				//���̳߳��е�һ���߳�ȥ�����û�������Ϣ
+				//套接字连接
 				Socket socket = serverSocket.accept();
-				
+				//创建新的线程任务
 				pool.execute(new OnlineServer(socket,users));
 				
 			}
@@ -48,10 +48,4 @@ public class ChatServer{
 		cs.start();		
 		System.out.println("123");
 	}
-	
-//
-//	static public void add(Chat chat) {
-////		onlineServer.addObserver(chat);
-//		System.out.println("������");
-//	}
 }

@@ -27,21 +27,21 @@ public class ReceiveTask implements Runnable {
 		
 		do {
 			DatagramPacket packet = new DatagramPacket(buf, buf.length);
-			//½ÓÊÕ
+			//æ¥æ”¶ recieve
 			try {
 				socket.receive(packet);
 				byte[] data = packet.getData();
 				flag = new String(data, 0, 4);
 				
-				//±êÖ¾0001   ½ÓÊÕÎª  ×Ö·û´®
+				//recieve string
 				if(flag.equals("0001")) {
 					msg= new String(data, 4, packet.getLength()-4);
-					System.out.println("ÊÕµ½£º" + msg);
+					System.out.println("recieveï¼š" + msg);
 //					System.out.println(msg.length());
 					
 				}
 				else {
-					//½ÓÊÕ  ÎÄ¼ş
+					// recieve file
 					out = receiveFile(out, packet, data);
 				}
 				
@@ -51,7 +51,7 @@ public class ReceiveTask implements Runnable {
 			}
 			
 		} while (!msg.toUpperCase().equals("BYE"));
-		System.out.println("ÊÕµ½½áÊø");
+		System.out.println("recieve overï¼ï¼ï¼");
 		
 	}
 
@@ -61,13 +61,13 @@ public class ReceiveTask implements Runnable {
 		String name = new String(data, 0, packet.getLength());
 		File path = new File("D:\\22", name);
 		if(path.exists()) {
-			//ÎÄ¼şÒÑ¾­´æÔÚ
-			System.out.println("½ÓÊÕ³É¹¦£¬Ãë´«");
+			// the file exists
+			System.out.println("æ¥æ”¶æˆåŠŸï¼ç§’ä¼ ");
 		}
 		else {
 			
 			byte [] buf = new byte[1024*200000];
-			//²»´æÔÚ£¬´´½¨
+			//ï¿½ï¿½ï¿½ï¿½ï¿½Ú£ï¿½ï¿½ï¿½ï¿½ï¿½
 			DatagramPacket packet2 = new DatagramPacket(buf,buf.length);
 			socket.receive(packet2);
 			
@@ -83,7 +83,7 @@ public class ReceiveTask implements Runnable {
 //			out.write(string.getBytes(),0,string.length());
 			System.out.println(new String(ss));
 			
-			System.out.println("½ÓÊÕ³É¹¦£¡£¡£¡");
+			System.out.println("æ¥æ”¶æˆåŠŸï¼ï¼ï¼");
 		}
 		out.close();
 		return out;

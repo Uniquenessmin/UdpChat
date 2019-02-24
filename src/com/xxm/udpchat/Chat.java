@@ -43,18 +43,18 @@ public class Chat {
 			udpSocket = new DatagramSocket();
 			int udpPort = udpSocket.getLocalPort();			
 			
-			//TODO ��udp�Ķ˿ںŷ���ȥ
+			//TODO 发送udp端口号
 			out.write(String.valueOf(udpPort).getBytes());
 			out.flush();
 			System.out.println(String.valueOf(udpPort));
 																																																																	
-			//�����û�de�б��SendTask
+			//把udpSocket发送SendTask
 			sender = new Thread(new SendTask(udpSocket));
 			receiver = new Thread(new ReceiveTask(udpSocket));			
 			sender.start();
 			receiver.start();
 			
-			//���������û��б�
+			//接收用户列表
 			byte[] buf = new byte[1024];
 			int size;
 			String json;
@@ -90,16 +90,3 @@ public class Chat {
 	}
 	
 }
-//�ͻ��˷���Ϣ�������
-//����˸��ͻ��˷��б���Ϣ
-//�����û����£��ͻ��˿��Եõ�������Ϣ
-//���Ͳ�ͬ���͵���Ϣ���ַ�����ͼƬ���ļ�
-
-
-//���ݽ��� �ļ� ������
-
-//ͨѶ˫����˭��
-//���� ע��
-//���͵���Ϣ��json��װ
-//��̨����������
-//ui

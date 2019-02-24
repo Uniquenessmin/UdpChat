@@ -30,7 +30,7 @@ public class Data {
 
 	/**
 	 * 
-	 *** ·¢ËÍ×Ö·û´®
+	 *** send string
 	 * 
 	 * @return
 	 */
@@ -39,14 +39,13 @@ public class Data {
 		String msg = sc.nextLine();
 //		byte[] data = msg.getBytes();
 		try {
-			// Ôö¼Ó ×Ö·û´®±êÖ¾ ¡°0001¡±
+			// string flag 0001
 			String content = String.format("0001%s", msg);
 			byte[] data = content.getBytes();
-//			System.err.println(content.length());
-			// ´´½¨Êı¾İ°ü¡¢·¢ËÍ
-//			packet = new DatagramPacket(content.getBytes(), content.length(), InetAddress.getByName("127.0.0.1"), port);
-			packet = new DatagramPacket(data, data.length, InetAddress.getByName("127.0.0.1"), port);
 
+			// create packet and send
+			packet = new DatagramPacket(data, data.length, 
+					InetAddress.getByName("127.0.0.1"), port);
 			socket.send(packet);
 
 		} catch (UnknownHostException e) {
@@ -61,7 +60,7 @@ public class Data {
 
 	/**
 	 * 
-	 *** ·¢ÎÄ¼ş
+	 *** send file .txt
 	 * 
 	 */
 	public void sendFile() {
@@ -69,7 +68,7 @@ public class Data {
 		String filePath = sc.nextLine();
 
 		try {
-			// ·¢ËÍÎÄ¼şÃû×Ö
+			// send åç¼€å
 			int index = filePath.lastIndexOf(File.separator);
 			String name = filePath.substring(index + 1);
 			System.out.println(name);
@@ -77,13 +76,13 @@ public class Data {
 					InetAddress.getByName("127.0.0.1"), port);
 			socket.send(packet);
 
-			// ¶Á±¾µØÎÄ¼şÄÚÈİ
+			// send file content
 			BufferedInputStream in = new BufferedInputStream(new FileInputStream(filePath));
 
 			byte[] bs = new byte[1024 * 200000];
 			int size = in.read(bs);
 			
-			// Ôö¼Ó ÎÄ¼ş±êÖ¾ ¡°0000¡±
+			// file flag 0000
 			String content = String.format("0000%s", new String(bs, 0, size));
 			System.out.println(content);
 			byte[] data = content.getBytes();
@@ -91,7 +90,7 @@ public class Data {
 			DatagramPacket packet2 = new DatagramPacket(data, data.length, 
 					InetAddress.getByName("127.0.0.1"), port);
 
-			// ·¢ËÍ
+			// å‘é€
 			socket.send(packet2);
 
 		} catch (FileNotFoundException e) {
@@ -104,7 +103,7 @@ public class Data {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("ÎÄ¼ş·¢ËÍ³É¹¦£¡");
+		System.out.println("å‘é€æˆåŠŸï¼ï¼ï¼");
 	}
 
 }

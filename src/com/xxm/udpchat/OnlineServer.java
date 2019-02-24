@@ -24,13 +24,13 @@ public class OnlineServer implements Runnable {
 		try(InputStream in = socket.getInputStream();
 				OutputStream out = socket.getOutputStream()) {
 			
-			//��ȡ�ǳ�
+			//recieve user name
 			byte[] buf = new byte[64];
 			int size = in.read(buf);
 			nick = new String(buf, 0, size);
 			int userSize = users.size();
 			
-			//��ȡudpPort
+			//recieve udpPort
 			byte[] udp = new byte[64];
 			size = in.read(udp);
 			String uString = new String(udp, 0, size);
@@ -39,13 +39,12 @@ public class OnlineServer implements Runnable {
 //			System.out.println("udp=" + udpPort);
 
 			
-			//�洢
+			//存入哈希表users
 			users.put(nick, udpPort);
 //			System.out.println(users.size());
 			
 			
-			//���������û���Ϣ
-			//������������
+			//发送在线用户
 			//users---> XML/JSON
 			String json = new Gson().toJson(users);
 			String newJson = null;
@@ -55,7 +54,7 @@ public class OnlineServer implements Runnable {
 			out.flush();
 			
 			/**
-			 * �����û��б�
+			 * 重复更新在线用户列表
 			 * 
 			 */
 			while(true) {
@@ -79,7 +78,7 @@ public class OnlineServer implements Runnable {
 			}		
 			
 		} catch (Exception e) {
-			System.out.println(nick+"������");
+			System.out.println(nick+"已下线");
 			users.remove(nick);
 			System.out.println(users.toString());
 		}
